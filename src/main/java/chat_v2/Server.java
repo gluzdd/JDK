@@ -1,0 +1,45 @@
+package chat_v2;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Server {
+    boolean isConnect;
+    Listenerable action;
+    StringBuilder textlog;
+    private static final String fileName = "./src/main/java/chat_v2/log_file.txt";
+
+    public Server(Listenerable action) {
+        this.isConnect = false  ;
+        this.action = action;
+    }
+    void callMethodIF() {
+        textlog = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(
+                new FileReader(Server.fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                textlog.append(line).append("\n");
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        action.buttonAction(textlog.toString());
+    }
+    void sendChat(String textMsg) {
+        textlog.append(textMsg + "\n");
+        action.buttonAction(textMsg + "\n");
+    }
+    void logout() {
+        try (FileWriter fw = new FileWriter(Server.fileName)) {
+            fw.write(textlog.toString());
+            fw.flush();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+}
+
+
