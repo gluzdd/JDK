@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Server {
+public class Server implements Clickable{
     boolean isConnect;
     Listenerable action;
     StringBuilder textlog;
@@ -15,7 +15,25 @@ public class Server {
         this.isConnect = false  ;
         this.action = action;
     }
-    void callMethodIF() {
+
+    @Override
+    public void sendMessage(String textMsg) {
+        textlog.append(textMsg + "\n");
+        action.buttonAction(textMsg + "\n");
+    }
+
+    @Override
+    public void disconnect() {
+        try (FileWriter fw = new FileWriter(Server.fileName)) {
+            fw.write(textlog.toString());
+            fw.flush();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    @Override
+    public void login(String login, String password) {
         textlog = new StringBuilder();
         try (BufferedReader br = new BufferedReader(
                 new FileReader(Server.fileName))) {
@@ -27,18 +45,6 @@ public class Server {
             throw new RuntimeException(ex);
         }
         action.buttonAction(textlog.toString());
-    }
-    void sendChat(String textMsg) {
-        textlog.append(textMsg + "\n");
-        action.buttonAction(textMsg + "\n");
-    }
-    void logout() {
-        try (FileWriter fw = new FileWriter(Server.fileName)) {
-            fw.write(textlog.toString());
-            fw.flush();
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
     }
 }
 

@@ -28,13 +28,13 @@ public class ChatWindow extends JFrame implements Listenerable{
     private final JTextField ftMessage = new JTextField("Enter your message");
     private final JButton btnSend = new JButton("Send");
     final JTextArea log = new JTextArea();
+    private Clickable click;
     public ChatWindow() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocation(WINDOW_POSX, WINDOW_POSY);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setTitle("Chat Client");
         setResizable(true);
-
 
         panelTop.add(tfIPAddress);
         panelTop.add(tfPort);
@@ -44,14 +44,15 @@ public class ChatWindow extends JFrame implements Listenerable{
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                server.callMethodIF();
+                server.login(tfLogin.getText(), tfPassword.getText());
+                System.out.println(tfLogin.getText() + "   " + tfPassword.getText());
             }
         });
         panelTop.add(btnLogout);
         btnLogout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                server.logout();
+                server.disconnect();
             }
         });
 
@@ -60,7 +61,7 @@ public class ChatWindow extends JFrame implements Listenerable{
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    server.sendChat(ftMessage.getText());
+                    server.sendMessage(ftMessage.getText());
                 }
             }
         });
@@ -68,7 +69,7 @@ public class ChatWindow extends JFrame implements Listenerable{
         btnSend.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                server.sendChat(ftMessage.getText());
+                server.sendMessage(ftMessage.getText());
             }
         });
 
