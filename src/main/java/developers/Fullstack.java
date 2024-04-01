@@ -14,6 +14,4 @@ public class Fullstack extends Developer implements Backendable, Frontendable{
     public void doFrontendWork() {
         System.out.println("Good backend work!");
     }
-
-
 }

@@ -14,4 +14,7 @@ public class Frontender extends Developer implements Backendable, Frontendable{
     public void doFrontendWork() {
         System.out.println("Good backend work!");
     }
+    public void developGUI (Developer e) {
+            ((Frontender) e).doFrontendWork();
+    }
 }

@@ -6,16 +6,22 @@ public class Main {
         Frontender frontender = new Frontender("Anna", 29);
         Fullstack fullstackerDevepoer = new Fullstack("Vika", 27);
         Backendable fullstack2 = new Fullstack("Artem", 35);
+        Developer developer = new Frontender("Kris", 31);
 
-        backender.doBackendWork();
-        backender.doFrontendWork();
 
-        frontender.doBackendWork();
-        frontender.doFrontendWork();
+        ((Frontender) developer).developGUI(developer);
 
-        fullstackerDevepoer.doBackendWork();
-        fullstackerDevepoer.doFrontendWork();
 
-        fullstack2.doBackendWork();
+
+        //        backender.doBackendWork();
+//        backender.doFrontendWork();
+//
+//        frontender.doBackendWork();
+//        frontender.doFrontendWork();
+//
+//        fullstackerDevepoer.doBackendWork();
+//        fullstackerDevepoer.doFrontendWork();
+//
+//        fullstack2.doBackendWork();
     }
 }
